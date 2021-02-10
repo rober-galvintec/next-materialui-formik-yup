@@ -9,6 +9,7 @@ import { TextField } from 'formik-material-ui';
 // Material-UI icons
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import CheckIcon from '@material-ui/icons/Check';
 
 // Material-UI components
 import {
@@ -36,7 +37,7 @@ const CategoryForm = ({ t, category, onCategoryFormSubmit }) => {
   } = useContext(I18nContext);
 
   // Component state
-  const [localeLang, setLocaleLang] = useState(language);
+  const [localeLang, setLocaleLang] = useState(category.locales[0].lang);
 
   return (
     <Container>
@@ -44,6 +45,13 @@ const CategoryForm = ({ t, category, onCategoryFormSubmit }) => {
         initialValues={{
           name: category?.name || '',
           position: category?.position || 0,
+          locales:
+            category?.locales ||
+            languageDetails.map((l) => ({
+              code: l.code,
+              name: '',
+              slug: '',
+            })),
         }}
         validationSchema={categoryUpdateSchema(language)}
         onSubmit={(values, { setSubmitting }) => {
@@ -53,7 +61,7 @@ const CategoryForm = ({ t, category, onCategoryFormSubmit }) => {
           }, 500);
         }}
       >
-        {({ submitForm, isSubmitting, isValid, dirty }) => (
+        {({ values, submitForm, isSubmitting, isValid, dirty }) => (
           <Form>
             <Box mt={2} style={{ width: 500 }}>
               {/* Name */}
@@ -89,7 +97,6 @@ const CategoryForm = ({ t, category, onCategoryFormSubmit }) => {
 
               {/* Language selector */}
               <Box mt={3}>
-                <h4>Lang: {localeLang}</h4>
                 <LangSelector
                   localeLang={localeLang}
                   availableLangs={languageDetails}
@@ -98,6 +105,41 @@ const CategoryForm = ({ t, category, onCategoryFormSubmit }) => {
               </Box>
 
               {/* Locales */}
+              <FieldArray
+                name='locales'
+                render={() => (
+                  <Box>
+                    {values.locales.map((locale, index) => {
+                      if (values.locales[index].lang === localeLang) {
+                        return (
+                          <Box key={index}>
+                            <Box mt={2} mb={1}>
+                              <Field
+                                required
+                                mt={3}
+                                component={TextField}
+                                fullWidth
+                                type='text'
+                                label={t('name')}
+                                name={`locales.${index}.name`}
+                              />
+                            </Box>
+                            <Box mt={1} mb={1}>
+                              <Field
+                                component={TextField}
+                                fullWidth
+                                type='text'
+                                label={t('slug')}
+                                name={`locales.${index}.slug`}
+                              />
+                            </Box>
+                          </Box>
+                        );
+                      }
+                    })}
+                  </Box>
+                )}
+              />
             </Box>
 
             <Box mt={3}>{isSubmitting && <LinearProgress />}</Box>
@@ -109,7 +151,7 @@ const CategoryForm = ({ t, category, onCategoryFormSubmit }) => {
                 onClick={submitForm}
                 mt={2}
               >
-                Submit
+                <CheckIcon /> {t('accept')}
               </Button>
             </Box>
           </Form>

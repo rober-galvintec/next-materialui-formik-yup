@@ -49,37 +49,38 @@ const CategoryForm = ({ t, category, onCategoryFormSubmit }) => {
       >
         {({ submitForm, isSubmitting, isValid, dirty }) => (
           <Form>
-            <Box mt={2}>
-              <Field
-                required
-                component={TextField}
-                variant='outlined'
-                name='name'
-                type='text'
-                label={t('name')}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position='start'>
-                      <AccountCircle />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-              <br />
-              <Field
-                component={TextField}
-                type='text'
-                label={t('position')}
-                name='position'
-              />
+            <Box mt={2} style={{ width: 500 }}>
+              <Box mt={2}>
+                <Field
+                  required
+                  fullWidth
+                  component={TextField}
+                  variant='standard'
+                  name='name'
+                  type='text'
+                  label={t('name')}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position='start'>
+                        <AccountCircle />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Box>
+
+              <Box mt={2}>
+                <Field
+                  component={TextField}
+                  fullWidth
+                  type='text'
+                  label={t('position')}
+                  name='position'
+                />
+              </Box>
             </Box>
 
             <Box mt={3}>{isSubmitting && <LinearProgress />}</Box>
-
-            <Box>
-              <span>Dirty: {dirty}</span>
-            </Box>
-
             <Box mt={3}>
               <Button
                 variant='contained'

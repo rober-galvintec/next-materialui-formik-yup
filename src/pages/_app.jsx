@@ -1,11 +1,16 @@
+// Vendor libs
 import React from 'react';
-import PropTypes from 'prop-types';
+import App from 'next/app';
 import Head from 'next/head';
+import PropTypes from 'prop-types';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import theme from '../themes/light';
 
-export default function BaseApp(props) {
+// Custom libs
+import theme from '../themes/light';
+import { appWithTranslation, lang } from '../lib/i18n';
+
+const BaseApp = (props) => {
   const { Component, pageProps } = props;
 
   React.useEffect(() => {
@@ -19,7 +24,7 @@ export default function BaseApp(props) {
   return (
     <React.Fragment>
       <Head>
-        <title>My page</title>
+        <title>Next.js + Material-UI + Formik + Yup</title>
         <meta
           name='viewport'
           content='minimum-scale=1, initial-scale=1, width=device-width'
@@ -32,9 +37,28 @@ export default function BaseApp(props) {
       </ThemeProvider>
     </React.Fragment>
   );
-}
+};
 
+// InitialProps
+BaseApp.getInitialProps = async (appContext) => {
+  const appProps = await App.getInitialProps(appContext);
+  const { defaultProps } = appContext.Component;
+  return {
+    ...appProps,
+    pageProps: {
+      namespacesRequired: [
+        ...(appProps.pageProps.namespacesRequired || []),
+        ...(defaultProps?.i18nNamespaces || []),
+      ],
+    },
+  };
+};
+
+// PropTypes
 BaseApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
   pageProps: PropTypes.object.isRequired,
 };
+
+// Exportation
+export default appWithTranslation(BaseApp);

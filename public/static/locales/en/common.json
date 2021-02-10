@@ -3,5 +3,8 @@
   "slug": "Slug",
   "position": "Position",
   "locales": "Locales",
-  "language": "Language"
+  "language": "Language",
+  "category": "Category",
+  "edit_{entity}": "Edit {{entity}}",
+  "accept": "Accept"
 }

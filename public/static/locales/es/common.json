@@ -3,5 +3,8 @@
   "slug": "Clave URL",
   "position": "Posición",
   "locales": "Traducciones",
-  "language": "Idioma"
+  "language": "Idioma",
+  "category": "Categoría",
+  "edit_{entity}": "Editar {{entity}}",
+  "accept": "Aceptar"
 }

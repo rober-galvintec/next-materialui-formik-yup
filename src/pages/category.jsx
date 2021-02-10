@@ -4,19 +4,28 @@ import React from 'react';
 // Material-UI components
 import Container from '@material-ui/core/Container';
 
+// Custom libs
+import { withTranslation } from '../lib/i18n';
+import { Typography } from '@material-ui/core';
+
 // Data
 const category = require('../data/category.json');
 
 // Component definition
-const CategoryPage = () => {
-  console.log(category);
-
+const CategoryPage = ({ t }) => {
   return (
-    <>
-      <h3>Category edit</h3>
-    </>
+    <Container>
+      <Typography variant='h5'>
+        {t('common:edit_{entity}', { entity: t('common:category') })}
+      </Typography>
+    </Container>
   );
 };
 
+// Default props
+CategoryPage.defaultProps = {
+  i18nNamespaces: ['common'],
+};
+
 // Exportation
-export default CategoryPage;
+export default withTranslation(['common'])(CategoryPage);

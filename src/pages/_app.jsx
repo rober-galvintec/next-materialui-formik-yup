@@ -1,5 +1,5 @@
 // Vendor libs
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import App from 'next/app';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
@@ -10,16 +10,23 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../themes/light';
 import { appWithTranslation, lang } from '../lib/i18n';
 
-const BaseApp = (props) => {
-  const { Component, pageProps } = props;
+const BaseApp = ({ Component, pageProps }) => {
+  // Component state
+  const [ssrDone, setSSRDone] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
+    setSSRDone(true);
+
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
   }, []);
+
+  if (!ssrDone) {
+    return <div>loading...</div>;
+  }
 
   return (
     <React.Fragment>

@@ -1,5 +1,5 @@
 // Vendor libs
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Formik, FieldArray, Form, Field } from 'formik';
 import { I18nContext } from 'next-i18next';
 
@@ -25,12 +25,18 @@ import { withTranslation } from '../../lib/i18n';
 // Yup schema
 import { categoryUpdateSchema } from '../../yup/category';
 
+// Custom components
+import LangSelector from '../shared/LangSelector';
+
 // Component definition
 const CategoryForm = ({ t, category, onCategoryFormSubmit }) => {
   // Get current language
   const {
-    i18n: { language },
+    i18n: { language, languageDetails },
   } = useContext(I18nContext);
+
+  // Component state
+  const [localeLang, setLocaleLang] = useState(language);
 
   return (
     <Container>
@@ -50,6 +56,7 @@ const CategoryForm = ({ t, category, onCategoryFormSubmit }) => {
         {({ submitForm, isSubmitting, isValid, dirty }) => (
           <Form>
             <Box mt={2} style={{ width: 500 }}>
+              {/* Name */}
               <Box mt={2}>
                 <Field
                   required
@@ -69,6 +76,7 @@ const CategoryForm = ({ t, category, onCategoryFormSubmit }) => {
                 />
               </Box>
 
+              {/* Position */}
               <Box mt={2}>
                 <Field
                   component={TextField}
@@ -78,6 +86,18 @@ const CategoryForm = ({ t, category, onCategoryFormSubmit }) => {
                   name='position'
                 />
               </Box>
+
+              {/* Language selector */}
+              <Box mt={3}>
+                <h4>Lang: {localeLang}</h4>
+                <LangSelector
+                  localeLang={localeLang}
+                  availableLangs={languageDetails}
+                  onLocaleLangChanged={(l) => setLocaleLang(l)}
+                />
+              </Box>
+
+              {/* Locales */}
             </Box>
 
             <Box mt={3}>{isSubmitting && <LinearProgress />}</Box>

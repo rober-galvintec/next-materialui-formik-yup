@@ -3,6 +3,9 @@ import React, { useState, useContext } from 'react';
 import { Formik, FieldArray, Form, Field } from 'formik';
 import { I18nContext } from 'next-i18next';
 
+// Material-UI components
+import Alert from '@material-ui/lab/Alert';
+
 // Formik-Material-UI
 import { TextField } from 'formik-material-ui';
 
@@ -12,13 +15,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import CheckIcon from '@material-ui/icons/Check';
 
 // Material-UI components
-import {
-  Button,
-  LinearProgress,
-  Typography,
-  Container,
-  Box,
-} from '@material-ui/core';
+import { Button, LinearProgress, Container, Box } from '@material-ui/core';
 
 // Custom libs
 import { withTranslation } from '../../lib/i18n';
@@ -30,15 +27,13 @@ import { categoryUpdateSchema } from '../../yup/category';
 import LangSelector from '../shared/LangSelector';
 
 // Component definition
-const CategoryForm = ({ t, category, onCategoryFormSubmit }) => {
+const CategoryForm = ({ t, category, formResult, onFormSubmit }) => {
   // Get current language
   const {
     i18n: { language, languageDetails },
   } = useContext(I18nContext);
-
   // Component state
   const [localeLang, setLocaleLang] = useState(category.locales[0].lang);
-
   return (
     <Container>
       <Formik
@@ -54,11 +49,8 @@ const CategoryForm = ({ t, category, onCategoryFormSubmit }) => {
             })),
         }}
         validationSchema={categoryUpdateSchema(language)}
-        onSubmit={(values, { setSubmitting }) => {
-          onCategoryFormSubmit(values);
-          setTimeout(() => {
-            setSubmitting(false);
-          }, 500);
+        onSubmit={(values, actions) => {
+          onFormSubmit(values, actions);
         }}
       >
         {({ values, submitForm, isSubmitting, isValid, dirty }) => (
@@ -110,7 +102,7 @@ const CategoryForm = ({ t, category, onCategoryFormSubmit }) => {
                 render={() => (
                   <Box>
                     {values.locales.map((locale, index) => {
-                      if (values.locales[index].lang === localeLang) {
+                      if (locale.lang === localeLang) {
                         return (
                           <Box key={index}>
                             <Box mt={2} mb={1}>
@@ -143,6 +135,15 @@ const CategoryForm = ({ t, category, onCategoryFormSubmit }) => {
             </Box>
 
             <Box mt={3}>{isSubmitting && <LinearProgress />}</Box>
+
+            <Box mt={3}>
+              {!isSubmitting && formResult?.message && (
+                <Alert severity={formResult?.ok ? 'success' : 'error'}>
+                  {formResult.message}
+                </Alert>
+              )}
+            </Box>
+
             <Box mt={3}>
               <Button
                 variant='contained'

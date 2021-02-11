@@ -10,6 +10,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../themes/light';
 import { appWithTranslation, lang } from '../lib/i18n';
 
+// Components
+import Header from '../components/shared/Header';
+
 const BaseApp = ({ Component, pageProps }) => {
   // Component state
   const [ssrDone, setSSRDone] = useState(false);
@@ -40,6 +43,7 @@ const BaseApp = ({ Component, pageProps }) => {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
+        <Header />
         <Component {...pageProps} />
       </ThemeProvider>
     </React.Fragment>

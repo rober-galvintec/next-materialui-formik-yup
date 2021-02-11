@@ -5,7 +5,7 @@ const path = require('path');
 // Custom libs
 const {
   defaultLanguage,
-  localeSubpaths
+  localeSubpaths,
 } = require('next/config').default().publicRuntimeConfig;
 
 // --------------------------------------------------
@@ -20,68 +20,68 @@ const allLanguageDetails = [
   {
     position: 1,
     code: 'es',
-    name: 'Castellano'
+    name: 'Castellano',
   },
   {
     position: 2,
     code: 'en',
-    name: 'English'
+    name: 'English',
   },
   {
     position: 3,
     code: 'fr',
-    name: 'Français'
+    name: 'Français',
   },
   {
     position: 4,
     code: 'de',
-    name: 'Deuch'
+    name: 'Deuch',
   },
   {
     position: 5,
     code: 'pt',
-    name: 'Português'
+    name: 'Português',
   },
   {
     position: 6,
     code: 'it',
-    name: 'Italiano'
+    name: 'Italiano',
   },
   {
     position: 7,
     code: 'gl',
-    name: 'Galego'
+    name: 'Galego',
   },
   {
     position: 8,
     code: 'ca',
-    name: 'Catalá'
+    name: 'Catalá',
   },
   {
     position: 9,
     code: 'eu',
-    name: 'Euskera'
-  }
+    name: 'Euskera',
+  },
 ];
 
 // **************************************************
 
 // Map languageDetails from languages and allLanguageDetails
 const languageDetails = allLanguageDetails.filter(
-  l => languages.indexOf(l.code) > -1
+  (l) => languages.indexOf(l.code) > -1
 );
 
 // Map otherLanguages from languages and defaultLanguage
-const otherLanguages = languages.filter(l => l !== defaultLanguage);
+const otherLanguages = languages.filter((l) => l !== defaultLanguage);
 
 const NextI18NextInstance = new NextI18Next({
   localeSubpaths,
   defaultLanguage,
   otherLanguages,
   interpolation: {
-    escapeValue: false
+    escapeValue: false,
   },
-  localePath: path.resolve('./public/static/locales')
+  localePath: path.resolve('./public/static/locales'),
 });
 
 // Trick for avoid console log "react-i18next:: i18n.languages were undefined or empty undefined"

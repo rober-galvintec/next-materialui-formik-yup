@@ -6,5 +6,6 @@
   "language": "Idioma",
   "category": "Categoría",
   "edit_{entity}": "Editar {{entity}}",
-  "accept": "Aceptar"
+  "accept": "Aceptar",
+  "successful_request": "Solicidud realizada con éxito"
 }

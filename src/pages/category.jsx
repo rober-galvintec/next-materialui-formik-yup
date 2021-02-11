@@ -1,5 +1,5 @@
 // Vendor libs
-import React from 'react';
+import React, { useState } from 'react';
 
 // Material-UI components
 import Container from '@material-ui/core/Container';
@@ -17,9 +17,25 @@ const category = require('../data/category.json');
 
 // Component definition
 const CategoryPage = ({ t }) => {
+  // Component state
+  const [formResult, setFormResult] = useState({ ok: null, message: '' });
+
   // Event handlers
-  function categoryFormSubmitHandler(values) {
-    console.log(JSON.stringify(values, null, 2));
+  async function formSubmitHandler(values, formActions) {
+    formActions.setSubmitting(true);
+
+    setTimeout(() => {
+      console.log(JSON.stringify(values, null, 2));
+
+      if (values.name === 'xxx') {
+        formActions.setFieldError('name', 'Bad name');
+        setFormResult({ ok: false, message: 'Bad name' });
+      } else {
+        formActions.resetForm({ values });
+        setFormResult({ ok: true, message: t('successful_request') });
+      }
+      formActions.setSubmitting(false);
+    }, 1500);
   }
 
   return (
@@ -32,7 +48,8 @@ const CategoryPage = ({ t }) => {
       <Box>
         <CategoryForm
           category={category}
-          onCategoryFormSubmit={categoryFormSubmitHandler}
+          formResult={formResult}
+          onFormSubmit={formSubmitHandler}
         />
       </Box>
     </Container>

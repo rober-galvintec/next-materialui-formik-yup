@@ -90,8 +90,7 @@ const CategoryForm = ({ t, category, formResult, onFormSubmit }) => {
               {/* Language selector */}
               <Box mt={3}>
                 <LangSelector
-                  localeLang={localeLang}
-                  availableLangs={languageDetails}
+                  localeLangs={category.locales.map((bl) => bl.lang)}
                   onLocaleLangChanged={(l) => setLocaleLang(l)}
                 />
               </Box>
@@ -110,15 +109,17 @@ const CategoryForm = ({ t, category, formResult, onFormSubmit }) => {
                                 required
                                 mt={3}
                                 component={TextField}
+                                variant='outlined'
                                 fullWidth
                                 type='text'
                                 label={t('name')}
                                 name={`locales.${index}.name`}
                               />
                             </Box>
-                            <Box mt={1} mb={1}>
+                            <Box mt={3} mb={1}>
                               <Field
                                 component={TextField}
+                                variant='outlined'
                                 fullWidth
                                 type='text'
                                 label={t('slug')}

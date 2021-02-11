@@ -11,18 +11,24 @@ import Tab from '@material-ui/core/Tab';
 import { withTranslation } from '../../lib/i18n';
 
 // Component definition
-const LangSelector = ({ localeLang, onLocaleLangChanged }) => {
+const LangSelector = ({ localeLangs, onLocaleLangChanged }) => {
   // Component state
   const [currentTab, setCurrentTab] = useState(0);
 
+  // Get list of all language details
   const {
     i18n: { languageDetails },
   } = useContext(I18nContext);
 
+  // Set only languages used by locales
+  const languages = languageDetails.filter(
+    (ld) => localeLangs.indexOf(ld.code) > -1
+  );
+
   // Event handlers
   function handleCurrentTabChanged(c) {
     setCurrentTab(c);
-    onLocaleLangChanged(languageDetails[c].code);
+    onLocaleLangChanged(languages[c].code);
   }
 
   function a11yProps(index) {
@@ -40,9 +46,9 @@ const LangSelector = ({ localeLang, onLocaleLangChanged }) => {
         onChange={(e, c) => handleCurrentTabChanged(c)}
         aria-label='Language selector'
       >
-        {languageDetails &&
-          languageDetails.length > 0 &&
-          languageDetails.map((al, index) => (
+        {languages &&
+          languages.length > 0 &&
+          languages.map((al, index) => (
             <Tab
               key={al.code}
               label={al.name}

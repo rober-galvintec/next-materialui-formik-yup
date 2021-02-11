@@ -48,8 +48,8 @@ const CategoryPage = ({ t }) => {
       <Box>
         <CategoryForm
           category={category}
-          formResult={formResult}
           onFormSubmit={formSubmitHandler}
+          formResult={formResult}
         />
       </Box>
     </Container>

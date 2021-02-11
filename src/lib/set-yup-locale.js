@@ -12,7 +12,7 @@ const validationEN = require('../../public/static/locales/en/yup.json');
 // const validationCA = require('../../locales/ca/yup.json');
 // const validationEU = require('../../locales/eu/yup.json');
 
-module.exports = (lng) => {
+module.exports = lng => {
   switch (lng) {
     case 'es':
       setLocale(validationES);

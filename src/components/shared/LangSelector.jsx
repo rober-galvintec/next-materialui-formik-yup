@@ -17,12 +17,12 @@ const LangSelector = ({ localeLangs, onLocaleLangChanged }) => {
 
   // Get list of all language details
   const {
-    i18n: { languageDetails },
+    i18n: { languageDetails }
   } = useContext(I18nContext);
 
   // Set only languages used by locales
   const languages = languageDetails.filter(
-    (ld) => localeLangs.indexOf(ld.code) > -1
+    ld => localeLangs.indexOf(ld.code) > -1
   );
 
   // Event handlers
@@ -34,7 +34,7 @@ const LangSelector = ({ localeLangs, onLocaleLangChanged }) => {
   function a11yProps(index) {
     return {
       id: `lang-tab-${index}`,
-      'aria-controls': `lang-tabpanel-${index}`,
+      'aria-controls': `lang-tabpanel-${index}`
     };
   }
 
@@ -69,7 +69,7 @@ const LangSelector = ({ localeLangs, onLocaleLangChanged }) => {
 
 // Page defaultProps (include translations namespaces via "i18nNamespaces")
 LangSelector.defaultProps = {
-  i18nNamespaces: ['common'],
+  i18nNamespaces: ['common']
 };
 
 // Exportation

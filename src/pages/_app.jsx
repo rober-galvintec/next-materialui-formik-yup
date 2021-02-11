@@ -51,7 +51,7 @@ const BaseApp = ({ Component, pageProps }) => {
 };
 
 // InitialProps
-BaseApp.getInitialProps = async (appContext) => {
+BaseApp.getInitialProps = async appContext => {
   const appProps = await App.getInitialProps(appContext);
   const { defaultProps } = appContext.Component;
   return {
@@ -59,16 +59,16 @@ BaseApp.getInitialProps = async (appContext) => {
     pageProps: {
       namespacesRequired: [
         ...(appProps.pageProps.namespacesRequired || []),
-        ...(defaultProps?.i18nNamespaces || []),
-      ],
-    },
+        ...(defaultProps?.i18nNamespaces || [])
+      ]
+    }
   };
 };
 
 // PropTypes
 BaseApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
-  pageProps: PropTypes.object.isRequired,
+  pageProps: PropTypes.object.isRequired
 };
 
 // Exportation

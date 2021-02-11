@@ -7,5 +7,7 @@
   "category": "Categoría",
   "edit_{entity}": "Editar {{entity}}",
   "accept": "Aceptar",
-  "successful_request": "Solicidud realizada con éxito"
+  "successful_request": "Solicidud realizada con éxito",
+  "cancel": "Cancelar",
+  "undo": "Cancelar cambios"
 }

@@ -17,9 +17,6 @@ const category = require('../data/category.json');
 
 // Component definition
 const CategoryPage = ({ t }) => {
-  // Component state
-  const [formResult, setFormResult] = useState({ ok: null, message: '' });
-
   // Event handlers
   async function formSubmitHandler(values, formActions) {
     formActions.setSubmitting(true);
@@ -29,13 +26,16 @@ const CategoryPage = ({ t }) => {
 
       if (values.name === 'xxx') {
         formActions.setFieldError('name', 'Bad name');
-        setFormResult({ ok: false, message: 'Bad name' });
+        formActions.setStatus({
+          ok: false,
+          message: 'Error en datos enviados',
+        });
       } else {
         formActions.resetForm({ values });
-        setFormResult({ ok: true, message: t('successful_request') });
+        formActions.setStatus({ ok: true, message: t('successful_request') });
       }
       formActions.setSubmitting(false);
-    }, 1500);
+    }, 500);
   }
 
   return (
@@ -45,12 +45,8 @@ const CategoryPage = ({ t }) => {
         <strong>{` "${category.name}"`}</strong>
       </Typography>
 
-      <Box>
-        <CategoryForm
-          category={category}
-          onFormSubmit={formSubmitHandler}
-          formResult={formResult}
-        />
+      <Box display='flex' justifyContent='flex-start'>
+        <CategoryForm category={category} onFormSubmit={formSubmitHandler} />
       </Box>
     </Container>
   );

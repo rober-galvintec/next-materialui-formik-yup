@@ -4,8 +4,6 @@ import React from 'react';
 // Material-UI components
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
-import Link from '@material-ui/core/Link';
 
 // Custom libs
 import { i18n, withTranslation } from '../../lib/i18n';
@@ -19,9 +17,8 @@ const Header = () => {
           disabled={l.code === i18n.language}
           key={l.code}
           color='secondary'
-          key={l.code}
           type='button'
-          onClick={e => i18n.changeLanguage(l.code)}
+          onClick={() => i18n.changeLanguage(l.code)}
         >
           {l.code}
         </Button>

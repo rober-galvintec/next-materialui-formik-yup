@@ -18,7 +18,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import CancelIcon from '@material-ui/icons/SettingsBackupRestore';
 
 // Material-UI components
-import { Button, LinearProgress, Container, Box } from '@material-ui/core';
+import { Button, LinearProgress, Box } from '@material-ui/core';
 
 // Custom libs
 import { withTranslation } from '../../lib/i18n';

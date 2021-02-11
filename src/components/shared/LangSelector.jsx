@@ -1,6 +1,7 @@
 // Vendor libs
 import React, { useState, useContext } from 'react';
 import { I18nContext } from 'next-i18next';
+import PropTypes from 'prop-types';
 
 // Material-UI components
 import Box from '@material-ui/core/Box';
@@ -70,6 +71,12 @@ const LangSelector = ({ localeLangs, onLocaleLangChanged }) => {
 // Page defaultProps (include translations namespaces via "i18nNamespaces")
 LangSelector.defaultProps = {
   i18nNamespaces: ['common']
+};
+
+// PropTypes
+LangSelector.propTypes = {
+  localeLangs: PropTypes.arrayOf(PropTypes.string),
+  onLocaleLangChanged: PropTypes.func
 };
 
 // Exportation

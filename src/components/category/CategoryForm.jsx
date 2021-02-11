@@ -3,6 +3,7 @@ import React, { useState, useContext } from 'react';
 import { Formik, FieldArray, Form, Field } from 'formik';
 import slugify from 'slugify';
 import { I18nContext } from 'next-i18next';
+import PropTypes from 'prop-types';
 
 // Material-UI components
 import Alert from '@material-ui/lab/Alert';
@@ -32,7 +33,7 @@ import LangSelector from '../shared/LangSelector';
 const CategoryForm = ({ t, category, onFormSubmit }) => {
   // Get current language
   const {
-    i18n: { language, languageDetails },
+    i18n: { language, languageDetails }
   } = useContext(I18nContext);
   // Component state
   const [localeLang, setLocaleLang] = useState(category.locales[0].lang);
@@ -43,11 +44,11 @@ const CategoryForm = ({ t, category, onFormSubmit }) => {
         position: category?.position || 0,
         locales:
           category?.locales ||
-          languageDetails.map((l) => ({
+          languageDetails.map(l => ({
             code: l.code,
             name: '',
-            slug: '',
-          })),
+            slug: ''
+          }))
       }}
       validationSchema={categoryUpdateSchema(language)}
       onSubmit={(values, actions) => {
@@ -62,7 +63,7 @@ const CategoryForm = ({ t, category, onFormSubmit }) => {
         isValid,
         dirty,
         resetForm,
-        setFieldValue,
+        setFieldValue
       }) => (
         <Form>
           <Box>
@@ -81,7 +82,7 @@ const CategoryForm = ({ t, category, onFormSubmit }) => {
                     <InputAdornment position='start'>
                       <AccountCircle />
                     </InputAdornment>
-                  ),
+                  )
                 }}
               />
             </Box>
@@ -100,8 +101,8 @@ const CategoryForm = ({ t, category, onFormSubmit }) => {
             {/* Language selector */}
             <Box mt={3}>
               <LangSelector
-                localeLangs={category.locales.map((bl) => bl.lang)}
-                onLocaleLangChanged={(l) => setLocaleLang(l)}
+                localeLangs={category.locales.map(bl => bl.lang)}
+                onLocaleLangChanged={l => setLocaleLang(l)}
               />
             </Box>
 
@@ -113,7 +114,7 @@ const CategoryForm = ({ t, category, onFormSubmit }) => {
                   {values.locales.map((locale, index) => {
                     if (locale.lang === localeLang) {
                       return (
-                        <Box key={index}>
+                        <Box key={locale.lang}>
                           <Box mt={2} mb={1}>
                             <Field
                               required
@@ -124,7 +125,7 @@ const CategoryForm = ({ t, category, onFormSubmit }) => {
                               type='text'
                               label={t('name')}
                               name={`locales.${index}.name`}
-                              onChange={(e) => {
+                              onChange={e => {
                                 // Set name
                                 setFieldValue(
                                   `locales.${index}.name`,
@@ -152,6 +153,7 @@ const CategoryForm = ({ t, category, onFormSubmit }) => {
                         </Box>
                       );
                     }
+                    return '';
                   })}
                 </Box>
               )}
@@ -202,7 +204,24 @@ const CategoryForm = ({ t, category, onFormSubmit }) => {
 
 // Default props
 CategoryForm.defaultProps = {
-  i18nNamespaces: ['common'],
+  i18nNamespaces: ['common']
+};
+
+// PropTypes
+CategoryForm.propTypes = {
+  t: PropTypes.func.isRequired,
+  onFormSubmit: PropTypes.func.isRequired,
+  category: PropTypes.shape({
+    name: PropTypes.string,
+    position: PropTypes.number,
+    locales: PropTypes.arrayOf(
+      PropTypes.shape({
+        lang: PropTypes.string.isRequired,
+        name: PropTypes.string,
+        slug: PropTypes.string
+      })
+    )
+  })
 };
 
 // Exportation

@@ -1,0 +1,37 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es2020": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020
+  },
+  "extends": ["airbnb", "prettier", "prettier/react"],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "plugins": ["react", "prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    "no-unused-vars": "warn",
+    "no-console": "off",
+    "func-names": "off",
+    "no-process-exit": "off",
+    "object-shorthand": "off",
+    "class-methods-use-this": "off",
+    "react/jsx-filename-extension": "off",
+    "no-underscore-dangle": "off",
+    "eslint-disable-next-line": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "react/require-default-props": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/jsx-curly-newline": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "jsx-a11y/img-redundant-alt": "off",
+    "react/default-props-match-prop-types": "off"
+  }
+}

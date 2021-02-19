@@ -1,6 +1,7 @@
 // Vendor libs
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { I18nContext } from 'next-i18next';
 
 // Material-UI components
 import Container from '@material-ui/core/Container';
@@ -13,11 +14,19 @@ import { withTranslation } from '../../../lib/i18n';
 // Custom components
 import CategoryForm from '../../../components/category/CategoryForm';
 
+// Yup schema
+import { categoryUpdateSchema } from '../../../yup/category';
+
 // Data
 const category = require('../../../data/category.json');
 
 // Component definition
 const CategoryPage = ({ t }) => {
+  // Get current language
+  const {
+    i18n: { language }
+  } = useContext(I18nContext);
+
   // Event handlers
   async function formSubmitHandler(values, formActions) {
     formActions.setSubmitting(true);
@@ -47,7 +56,11 @@ const CategoryPage = ({ t }) => {
       </Typography>
 
       <Box display='flex' justifyContent='flex-start'>
-        <CategoryForm category={category} onFormSubmit={formSubmitHandler} />
+        <CategoryForm
+          validationSchema={categoryUpdateSchema(language)}
+          category={category}
+          onFormSubmit={formSubmitHandler}
+        />
       </Box>
     </Container>
   );

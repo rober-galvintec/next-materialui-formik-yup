@@ -57,12 +57,6 @@ const LangSelector = ({ localeLangs, onLocaleLangChanged }) => {
               index={al.position}
             />
           ))}
-
-        {/* <Tab key={'es'} label='Castellano' {...a11yProps('es')} index={0} />
-        <Tab key={'en'} label='English' {...a11yProps('en')} index={1} /> */}
-
-        {/* <Tab key={'es'} label='Castellano' {...a11yProps('es')} index={0} />
-        <Tab key={'en'} label='English' {...a11yProps('en')} index={1} /> */}
       </Tabs>
     </Box>
   );

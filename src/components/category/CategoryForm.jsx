@@ -23,17 +23,14 @@ import { Button, LinearProgress, Box } from '@material-ui/core';
 // Custom libs
 import { withTranslation } from '../../lib/i18n';
 
-// Yup schema
-import { categoryUpdateSchema } from '../../yup/category';
-
 // Custom components
 import LangSelector from '../shared/LangSelector';
 
 // Component definition
-const CategoryForm = ({ t, category, onFormSubmit }) => {
+const CategoryForm = ({ t, validationSchema, category, onFormSubmit }) => {
   // Get current language
   const {
-    i18n: { language, languageDetails }
+    i18n: { languageDetails }
   } = useContext(I18nContext);
   // Component state
   const [localeLang, setLocaleLang] = useState(category.locales[0].lang);
@@ -50,7 +47,7 @@ const CategoryForm = ({ t, category, onFormSubmit }) => {
             slug: ''
           }))
       }}
-      validationSchema={categoryUpdateSchema(language)}
+      validationSchema={validationSchema}
       onSubmit={(values, actions) => {
         onFormSubmit(values, actions);
       }}
@@ -62,6 +59,7 @@ const CategoryForm = ({ t, category, onFormSubmit }) => {
         isSubmitting,
         isValid,
         dirty,
+        errors,
         resetForm,
         setFieldValue
       }) => (
@@ -170,6 +168,8 @@ const CategoryForm = ({ t, category, onFormSubmit }) => {
             )}
           </Box>
 
+          <Box>{JSON.stringify(errors)}</Box>
+
           <Box
             mt={3}
             display='flex'
@@ -211,6 +211,8 @@ CategoryForm.defaultProps = {
 CategoryForm.propTypes = {
   t: PropTypes.func.isRequired,
   onFormSubmit: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  validationSchema: PropTypes.object,
   category: PropTypes.shape({
     name: PropTypes.string,
     position: PropTypes.number,
